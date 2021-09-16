@@ -5,7 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/loginFragment">
     <fragment
+        tools:layout="@layout/fragment_login"
         android:id="@+id/loginFragment"
         android:name="tw.ysky.codenotes.ui.login.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_list"
+        android:id="@+id/listFragment"
+        android:name="tw.ysky.codenotes.ui.list.ListFragment"
+        android:label="ListFragment" />
 </navigation>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="tw.ysky.codenotes.ui.login.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_title_login"
+            android:onClick="@{()->viewModel.onLoginClick()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guide_input_bot" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.password}"
+            android:lines="1"
+            app:layout_constraintBottom_toBottomOf="@id/tv_password"
+            app:layout_constraintEnd_toStartOf="@id/guide_input_end"
+            app:layout_constraintStart_toEndOf="@id/guide_title_end"
+            app:layout_constraintTop_toTopOf="@id/tv_password" />
+
+        <EditText
+            android:lines="1"
+            android:id="@+id/et_account"
+            android:text="@={viewModel.account}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/tv_account"
+            app:layout_constraintEnd_toStartOf="@id/guide_input_end"
+            app:layout_constraintStart_toEndOf="@id/guide_title_end"
+            app:layout_constraintTop_toTopOf="@id/tv_account" />
+
+        <TextView
+            android:id="@+id/tv_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_title_account"
+            app:layout_constraintBottom_toTopOf="@id/tv_password"
+            app:layout_constraintEnd_toStartOf="@id/guide_title_end"
+            app:layout_constraintStart_toEndOf="@id/guide_title_start"
+            app:layout_constraintTop_toBottomOf="@id/guide_input_top" />
+
+        <TextView
+            android:id="@+id/tv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_title_password"
+            app:layout_constraintBottom_toTopOf="@id/guide_input_bot"
+            app:layout_constraintEnd_toStartOf="@id/guide_title_end"
+            app:layout_constraintStart_toEndOf="@id/guide_title_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_account" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_input_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_input_bot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_title_start"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_title_end"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.45" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_input_end"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
