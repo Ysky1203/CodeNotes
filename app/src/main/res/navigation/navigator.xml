@@ -10,12 +10,21 @@
         android:name="tw.ysky.codenotes.ui.login.LoginFragment"
         android:label="LoginFragment" >
         <action
-            android:id="@+id/action_loginFragment_to_listFragment"
-            app:destination="@id/listFragment" />
+            android:id="@+id/action_loginFragment_to_selectFragment"
+            app:destination="@id/selectFragment" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_list"
         android:id="@+id/listFragment"
         android:name="tw.ysky.codenotes.ui.list.ListFragment"
         android:label="ListFragment" />
+    <fragment
+        tools:layout="@layout/fragment_select"
+        android:id="@+id/selectFragment"
+        android:name="tw.ysky.codenotes.ui.select.SelectFragment"
+        android:label="SelectFragment" >
+        <action
+            android:id="@+id/action_selectFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
 </navigation>

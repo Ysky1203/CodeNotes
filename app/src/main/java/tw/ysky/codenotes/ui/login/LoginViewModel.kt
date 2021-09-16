@@ -30,6 +30,6 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun loginSuccess() {
-        _goListFragment.value = Event(R.id.action_loginFragment_to_listFragment)
+        _goListFragment.value = Event(R.id.action_loginFragment_to_selectFragment)
     }
 }
