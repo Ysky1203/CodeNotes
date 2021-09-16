@@ -1,5 +1,6 @@
 package tw.ysky.codenotes.ui.list
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -11,15 +12,25 @@ import tw.ysky.codenotes.data.PostItem
 
 class ListViewModel: ViewModel() {
 
-    init {
-        viewModelScope.launch {
-            val results: Result<List<PostItem>> = ApiRepo(ApiHelper().getService()).getListData()
+    private var _postList: MutableList<PostItem> = ArrayList()
+    val postList = MutableLiveData<List<PostItem>>().apply {
+        MutableLiveData<List<PostItem>>().also {
+            viewModelScope.launch {
+                val results: Result<List<PostItem>> =
+                    ApiRepo(ApiHelper().getService()).getListData()
 
-            when (results) {
-                is Result.Error -> Timber.e("Get data from server failed.")
-                is Result.Success -> results.data.forEach { Timber.d("id = ${it.id}, userId = ${it.userId}") }
-            }
+                when (results) {
+                    is Result.Error -> {
+                        Timber.e("Get data from server failed.")
+                    }
+                    is Result.Success -> {
+                        results.data.forEach {
+                            _postList.add(it)
+                        }
+                    }
+                }
+                postValue(_postList)
+            }.start()
         }
     }
-
 }

@@ -5,4 +5,9 @@
     <string name="login_title_login">Login</string>
     <string name="login_title_password">Password</string>
 
+    <string name="list_cell_userid">user id : %d</string>
+    <string name="list_cell_id">id : %d</string>
+    <string name="list_cell_title">title : %s</string>
+    <string name="list_cell_body">body : %s</string>
+
 </resources>

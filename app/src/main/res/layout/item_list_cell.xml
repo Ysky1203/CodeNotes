@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp">
+
+        <TextView
+            android:textColor="@android:color/black"
+            android:id="@+id/tv_userid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/list_cell_userid(item.userId)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/list_cell_userid" />
+
+        <TextView
+            android:textColor="@android:color/black"
+            android:id="@+id/tv_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/list_cell_id(item.id)}"
+            app:layout_constraintStart_toEndOf="@+id/guide_cell_mid"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/list_cell_id" />
+
+        <TextView
+            android:textColor="@android:color/black"
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/list_cell_title(item.title)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_userid"
+            tools:text="@string/list_cell_title" />
+
+        <TextView
+            android:textColor="@android:color/black"
+            android:id="@+id/tv_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/list_cell_body(item.body)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:text="@string/list_cell_body" />
+
+        <androidx.constraintlayout.widget.Guideline
+            app:layout_constraintGuide_percent="0.5"
+            android:id="@+id/guide_cell_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+        <import type="tw.ysky.codenotes.data.PostItem" />
+
+        <variable
+            name="item"
+            type="PostItem" />
+    </data>
+</layout>
