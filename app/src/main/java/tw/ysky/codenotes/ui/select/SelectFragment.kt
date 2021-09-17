@@ -39,7 +39,7 @@ class SelectFragment : Fragment() {
     }
 
     private fun subscribeObservers() {
-        viewModel.goListFragment.observe(viewLifecycleOwner, EventObserver {
+        viewModel.switchFragment.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(it.hashCode())
         })
     }

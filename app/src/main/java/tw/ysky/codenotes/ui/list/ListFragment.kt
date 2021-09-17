@@ -13,7 +13,7 @@ import tw.ysky.codenotes.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
 
-    private val vm: ListViewModel by viewModels()
+    private val viewModel: ListViewModel by viewModels()
     private lateinit var binding: FragmentListBinding
 
     override fun onCreateView(
@@ -21,9 +21,11 @@ class ListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+
         val layoutManager = LinearLayoutManager(requireContext())
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false)
-        binding.viewModel = vm
+        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewPostList.layoutManager = layoutManager
 
@@ -37,7 +39,7 @@ class ListFragment : Fragment() {
     }
 
     private fun subscribeObservers() {
-        vm.postList.observe(viewLifecycleOwner, { list ->
+        viewModel.postList.observe(viewLifecycleOwner, { list ->
             binding.viewPostList.adapter = ListAdapter(requireContext(), list)
         })
     }

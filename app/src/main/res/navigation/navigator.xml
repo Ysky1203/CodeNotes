@@ -26,5 +26,13 @@
         <action
             android:id="@+id/action_selectFragment_to_listFragment"
             app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_selectFragment_to_camFragment"
+            app:destination="@id/camFragment" />
     </fragment>
+    <fragment
+        tools:layout="@layout/fragment_cam"
+        android:id="@+id/camFragment"
+        android:name="tw.ysky.codenotes.ui.cam.CamFragment"
+        android:label="CamFragment" />
 </navigation>

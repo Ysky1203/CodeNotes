@@ -6,16 +6,24 @@ import androidx.lifecycle.ViewModel
 import tw.ysky.codenotes.R
 import tw.ysky.codenotes.utils.Event
 
-class SelectViewModel:ViewModel() {
+enum class SelectType {
+    LIST,
+    CAMERA
+}
 
-    private val _goListFragment = MutableLiveData<Event<Any>>()
-    val goListFragment: LiveData<Event<Any>> = _goListFragment
+class SelectViewModel : ViewModel() {
 
-    fun goListFragment(){
-        _goListFragment.value = Event(R.id.action_selectFragment_to_listFragment)
+
+    private val _switchFragment = MutableLiveData<Event<Any>>()
+    val switchFragment: LiveData<Event<Any>> = _switchFragment
+
+    fun switchFragment(id: SelectType) {
+        when (id) {
+            SelectType.LIST -> _switchFragment.value =
+                Event(R.id.action_selectFragment_to_listFragment)
+            SelectType.CAMERA -> _switchFragment.value =
+                Event(R.id.action_selectFragment_to_camFragment)
+        }
     }
 
-    fun goCameraFragment(){
-
-    }
 }

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="tw.ysky.codenotes.ui.select.SelectType" />
 
         <variable
             name="viewModel"
@@ -21,7 +22,7 @@
             app:layout_constraintBottom_toTopOf="@+id/btn_go_cam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->viewModel.goListFragment()}"
+            android:onClick="@{()->viewModel.switchFragment(SelectType.LIST)}"
             android:text="List" />
 
         <Button
@@ -32,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->viewModel.goCameraFragment()}"
+            android:onClick="@{()->viewModel.switchFragment(SelectType.CAMERA)}"
             android:text="Camera" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
