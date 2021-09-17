@@ -2,52 +2,36 @@ package tw.ysky.codenotes.camx
 
 import android.graphics.ImageFormat
 import android.graphics.Rect
-import android.graphics.YuvImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
+import timber.log.Timber
 import tw.ysky.codenotes.BuildConfig
-import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 
 class LuminosityAnalyzer(private val listener: FrameListener) : ImageAnalysis.Analyzer {
-    override fun analyze(image: ImageProxy) {
+    override fun analyze(imageProxy: ImageProxy) {
 
-        if (BuildConfig.DEBUG && image.format != ImageFormat.YUV_420_888) {
+        if (BuildConfig.DEBUG && imageProxy.format != ImageFormat.YUV_420_888) {
             error("Image fail Assertion failed")
         }
-        image.toArray()?.let { listener(it) }
+        val rotationDegrees = imageProxy.imageInfo.rotationDegrees
 
-        image.close()
+        Timber.d("Image format = ${imageProxy.format} , $(w,h) = ${imageProxy.width}, ${imageProxy.height}")
+
+        listener(imageProxy.toArray(), rotationDegrees)
+
+        imageProxy.close()
     }
 
-    private fun ImageProxy.toArray(): ByteArray? {
+    private fun ImageProxy.toArray(): ByteArray {
         return yuv420888ToNv21(this)
     }
 
-    private fun convertToYUV420P(
-        yBuffer: ByteBuffer,
-        uBuffer: ByteBuffer,
-        vBuffer: ByteBuffer,
-        width: Int,
-        height: Int
-    ): ByteArray {
-
-        val ySize = yBuffer.remaining()
-        val uSize = uBuffer.remaining()
-        val vSize = vBuffer.remaining()
-
-        val nv21 = ByteArray(ySize + uSize + vSize)
-
-        //U and V are swapped
-        yBuffer.get(nv21, 0, ySize)
-        vBuffer.get(nv21, ySize, vSize)
-        uBuffer.get(nv21, ySize + vSize, uSize)
-
-        val yuvImage = YuvImage(nv21, ImageFormat.NV21, width, height, null)
-        val out = ByteArrayOutputStream()
-        yuvImage.compressToJpeg(Rect(0, 0, yuvImage.width, yuvImage.height), 50, out)
-
-        return out.toByteArray()
+    private fun ByteBuffer.toByteArray(): ByteArray {
+        rewind()    // Rewind the buffer to zero
+        val data = ByteArray(remaining())
+        get(data)   // Copy the buffer into a byte array
+        return data // Return the byte array
     }
 
     private fun yuv420888ToNv21(image: ImageProxy): ByteArray {
@@ -56,6 +40,7 @@ class LuminosityAnalyzer(private val listener: FrameListener) : ImageAnalysis.An
 
         val outputBuffer = ByteArray(pixelCount * pixelSizeBits / 8)
         imageToByteBuffer(image, outputBuffer, pixelCount)
+
         return outputBuffer
     }
 

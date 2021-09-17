@@ -11,6 +11,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import timber.log.Timber
+import tw.ysky.codenotes.utils.Const
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -28,18 +29,11 @@ class CamManager(
     private var cameraProvider: ProcessCameraProvider? = null
 
     private var frameListener: FrameListener? = null
-    private var width = 1280
-    private var height = 720
 
     private lateinit var preview: Preview
 
     fun setFrameListener(frameListener: FrameListener) {
         this.frameListener = frameListener
-    }
-
-    fun setResolution(width: Int, height: Int) {
-        this.width = width
-        this.height = height
     }
 
     @SuppressLint("RestrictedApi")
@@ -57,23 +51,22 @@ class CamManager(
         imageCapture = ImageCapture.Builder()
             .build()
 
-        val imageAnalyzer = ImageAnalysis.Builder().setTargetResolution(Size(width, height))
-            .build()
-            .also {
-                it.setAnalyzer(cameraExecutor, LuminosityAnalyzer { image ->
-                    frameListener?.let { it -> it(image) }
-                })
-            }
+        val imageAnalyzer =
+            ImageAnalysis.Builder().setTargetResolution(Size(Const.CAM_WIDTH, Const.CAM_HEIGHT))
+                .build()
+                .also {
+                    it.setAnalyzer(cameraExecutor, LuminosityAnalyzer { image, rotation ->
+                        frameListener?.let { it -> it(image, rotation) }
+                    })
+                }
 
         cameraProviderFuture.addListener({
-            // Used to bind the lifecycle of cameras to the lifecycle owner
             cameraProvider = cameraProviderFuture.get()
 
             try {
-                // Unbind use cases before rebinding
+
                 cameraProvider?.unbindAll()
 
-                // Bind use cases to camera
                 cameraProvider?.bindToLifecycle(
                     activity, cameraSelector, preview, imageCapture, imageAnalyzer
                 )
@@ -86,4 +79,5 @@ class CamManager(
     }
 }
 
-typealias FrameListener = (imgBuffer: ByteArray) -> Unit
+typealias FrameListener = (image: ByteArray, rotation: Int) -> Unit
+

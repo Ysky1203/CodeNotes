@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
             arrayOf(
                 Manifest.permission.CAMERA,
                 Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
             ), 0
         )
     }
